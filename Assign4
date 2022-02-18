@@ -1,0 +1,17 @@
+import requests
+import json
+
+url = "https://www.7timer.info/bin/astro.php?lon=113.2&lat=23.1&ac=0&unit=metric&output=json&tzshift=0"
+r = requests.get(url)
+print(r.text)
+
+foreData = json.loads(r.text)
+print(foreData)
+
+print(foreData['dataseries'])
+
+print(foreData['dataseries'][6])
+
+print('Seeing','Transparency')
+for direction in foreData['dataseries']:
+    print(direction['seeing'], direction ['transparency'])
