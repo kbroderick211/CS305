@@ -1,0 +1,32 @@
+library(tidyverse)
+library(tidyr)
+library(readr)
+library(datasets)
+library(dplyr)
+
+df <- read_csv("C:\\Users\\kbrod\\Downloads\\starbucks_drinkMenu_expanded.csv")
+head(df)
+view(df)
+
+colnames(df) <- c("BeverageCategory", "Beverage", "BeveragePrep", "Calories", "Total Fat", "Trans Fat", "Saturated Fat", "Sodium", "Carb", "Cholestorol", "Fiber", "Sugars", "Protein", "VitaminA", "VitaminC", "Calcium", "Iron", "Caffine")
+head(df)
+
+
+
+df$BeverageCategory <- iconv(df$BeverageCategory, 'utf-8', 'ascii', sub='')
+df$Beverage <- iconv(df$Beverage, 'utf-8', 'ascii', sub='')
+head(df)
+print(df)
+view(df)
+
+cols <- names(df)[4:12]
+df[cols] <- lapply(df[cols], as.integer)
+head(df)
+
+df <- na.omit(df)
+print(df)
+
+df <- df %>% 
+  mutate(IsHealthy = if_else(Calories > 200, "No", "Yes"))
+print(df)
+view(df)
